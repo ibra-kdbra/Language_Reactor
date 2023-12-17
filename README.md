@@ -41,8 +41,5 @@ To run the game with joystick support:
 
 If you would like to contribute, please make sure you follow the [Google C++ Style Guide](http://google-styleguide.googlecode.com/svn/trunk/cppguide.html).
 
-## License and Credits
-
-Pong code is MIT licensed
-
+## Credits
 NES Chimera Font by [Brian Kramer](https://www.pkeod.com/).
