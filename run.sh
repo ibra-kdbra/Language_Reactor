@@ -1,4 +1,5 @@
-#!/bin/bash
+#! /usr/bin/env nix-shell
+#! nix-shell shell.nix -i bash
 
 function run_ruby {
     echo "*------- ruby ---------*"
