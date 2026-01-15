@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Reactor</title>
+    <meta name="description" content="A high-performance benchmark and analysis dashboard comparing is_prime algorithm across 20+ programming languages. Created for performance enthusiasts.">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23ff2d55%22/><path d=%22M30 35l-15 15 15 15M70 35l15 15-15 15M45 70l10-40%22 stroke=%22white%22 stroke-width=%228%22 stroke-linecap=%22round%22 fill=%22none%22/></svg>">
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Link to Refactored Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    colors: {
+                        neon: { pink: '#ff2d55', blue: '#007aff', 'pink-dark': '#d11d43' },
+                        dark: { DEFAULT: '#020617', card: 'rgba(15, 23, 42, 0.95)', border: 'rgba(255, 45, 85, 0.2)' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-slate-200 min-h-screen relative font-sans overflow-x-hidden">
+    <!-- Background Decoration -->
+    <div class="bg-glow fixed inset-0 -z-10"></div>
+    
+    <!-- Header Section -->
+    <header class="py-12 px-4 text-center">
+        <div class="flex items-center justify-center gap-3 mb-2">
+            <i class="fas fa-microchip text-3xl md:text-5xl text-neon-pink drop-shadow-[0_0_15px_rgba(255,45,85,0.4)]"></i>
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-neon-pink via-purple-400 to-neon-blue bg-clip-text text-transparent py-2 uppercase">
+                Language Reactor
+            </h1>
+        </div>
+        <p class="text-slate-400 text-sm md:text-lg max-w-2xl mx-auto font-medium">High-Performance Benchmark & Analysis Dashboard</p>
+        <p class="text-neon-pink/50 text-[10px] mt-2 uppercase tracking-[0.2em] font-bold">Created for Performance Enthusiasts</p>
+    </header>
+
+    <!-- Main Dashboard Grid -->
+    <main class="max-w-7xl mx-auto px-4 pb-32">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            
+            <!-- Algorithm & Editor Column -->
+            <section class="dashboard-card shadow-neon-pink/5">
+                <div class="flex items-center gap-3 mb-4 text-white">
+                    <i class="fas fa-code text-neon-pink text-xl"></i>
+                    <h2 class="text-lg md:text-xl font-bold">Algorithm Preview</h2>
+                </div>
+                <p class="text-slate-400 text-xs md:text-sm mb-4">Reference: <code class="bg-slate-800 text-neon-pink/80 px-2 py-0.5 rounded">is_prime</code> (0 to 9,000,000)</p>
+                <div class="bg-black/60 border border-dark-border rounded-xl p-4 mb-6 overflow-x-auto text-white">
+                    <pre id="code-display" class="font-mono text-[11px] md:text-sm leading-relaxed text-blue-300 whitespace-pre-wrap break-all"><code>function is_prime(n) {
+    if (n <= 1) return false;
+    for (let i = 2, end = Math.sqrt(n); i <= end; i++) {
+        if (n % i === 0) return false;
+    }
+    return true;
+}</code></pre>
+                </div>
+                <button id="run-btn" class="w-full py-4 bg-neon-pink hover:bg-neon-pink-dark text-white font-extrabold rounded-xl shadow-lg shadow-neon-pink/20 transition-all active:scale-[0.98] flex items-center justify-center gap-3">
+                    <i class="fas fa-play text-xs"></i>
+                    <span>Run Web Benchmark</span>
+                </button>
+            </section>
+
+            <!-- Results & Stats Column -->
+            <section class="dashboard-card shadow-neon-pink/5">
+                <div class="flex items-center gap-3 mb-6 text-white border-b border-white/5 pb-4">
+                    <i class="fas fa-chart-bar text-neon-pink text-xl"></i>
+                    <h2 class="text-lg md:text-xl font-bold">Performance Comparison</h2>
+                </div>
+                <div class="h-[250px] md:h-[350px] mb-8 relative">
+                    <canvas id="resultsChart"></canvas>
+                </div>
+                <div class="overflow-x-auto -mx-1 px-1">
+                    <table class="w-full min-w-[400px]">
+                        <thead>
+                            <tr class="text-slate-500 text-[10px] md:text-xs uppercase tracking-wider border-b border-dark-border">
+                                <th class="text-left py-4 px-2">Lang</th>
+                                <th class="text-left py-4 px-2">Category</th>
+                                <th class="text-right py-4 px-2">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-body">
+                            <!-- Injected by app.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Feedback Modal Overlay -->
+    <div id="comment-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 md:p-6 bg-black/80 backdrop-blur-md">
+        <div class="bg-slate-900 border border-neon-pink/20 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <!-- Modal Header -->
+            <div class="p-5 border-b border-white/10 flex items-center justify-between bg-black/20 text-white">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-comments text-neon-pink text-xl"></i>
+                    <h2 class="text-xl font-bold">Community Feedback</h2>
+                </div>
+                <button id="close-modal" class="text-slate-400 hover:text-neon-pink transition-colors text-2xl p-2">&times;</button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto space-y-8">
+                <form id="comment-form" class="space-y-4 text-white">
+                    <input type="text" id="user-name" placeholder="Your Name" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-neon-pink transition-colors text-white font-medium" required>
+                    <textarea id="user-comment" placeholder="What do you think about these results?" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-neon-pink transition-colors h-24 resize-none text-slate-200" required></textarea>
+                    <button type="submit" class="w-full py-3 bg-neon-pink hover:bg-neon-pink-dark text-white font-bold rounded-xl shadow-lg transition-all active:scale-[0.98]">Post Comment</button>
+                </form>
+
+                <div class="space-y-4">
+                    <h3 class="text-sm font-semibold uppercase tracking-widest text-slate-500">Recent Comments</h3>
+                    <div id="comments-list" class="space-y-4">
+                        <!-- Injected by app.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Menu Container -->
+    <div id="fab-menu" class="fab-menu">
+        <!-- Repository Option -->
+        <a href="https://github.com/ibra-kdbra/Language_Reactor" target="_blank" class="fab-option" id="github-link" aria-label="GitHub Repository">
+            <i class="fab fa-github text-2xl"></i>
+        </a>
+
+        <!-- Feedback Option -->
+        <button id="open-comments" class="fab-option" aria-label="Open Feedback">
+            <i class="fas fa-comments text-xl"></i>
+        </button>
+
+        <!-- Main Trigger -->
+        <button id="menu-toggle" class="fab-trigger" aria-label="Toggle Menu">
+            <i class="fas fa-plus text-3xl"></i>
+        </button>
+    </div>
+
+    <!-- Core Logic -->
+    <script src="script.js"></script>
+</body>
+</html>
