@@ -1,5 +1,4 @@
-#! /usr/bin/env nix-shell
-#! nix-shell shell.nix -i bash
+#!/bin/bash
 
 function run_ruby {
     echo "*------- ruby ---------*"
@@ -233,7 +232,50 @@ declare -A langs=(
     ["r"]="run_r"
     ["ruby"]="run_ruby"
     ["chap"]="run_chap"
+    ["zig"]="run_zig"
+    ["fortran"]="run_fortran"
+    ["nim"]="run_nim"
 )
+
+function run_zig {
+    echo "*------------ Zig -------------*"
+    zig version
+    zig build-exe ./try/prime.zig -O ReleaseFast --name prime
+
+    sleep 5 # cpu cool down
+
+    ./prime
+    # check if file exists before attempting to remove it
+    [ -f "./prime" ] && rm ./prime
+    echo ""
+}
+
+function run_fortran {
+    echo "*----------- Fortran -----------*"
+    gfortran --version | head -n 1
+    gfortran -O3 ./try/prime.f90 -o prime
+
+    sleep 5 # cpu cool down
+
+    ./prime
+    # check if file exists before attempting to remove it
+    [ -f "./prime" ] && rm ./prime
+    echo ""
+}
+
+function run_nim {
+    echo "*------------- Nim -------------*"
+    nim --version | head -n 1
+    nim c -d:release --hints:off ./try/prime.nim
+    mv ./try/prime ./prime
+
+    sleep 5 # cpu cool down
+
+    ./prime
+    # check if file exists before attempting to remove it
+    [ -f "./prime" ] && rm ./prime
+    echo ""
+}
 
 # Define a function to display the help message
 function display_help {
