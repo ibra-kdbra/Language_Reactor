@@ -29,6 +29,9 @@ If no argument is provided, the script will run code in all supported languages.
 - php
 - r
 - [chap](https://github.com/ali77gh/Chap)
+- zig
+- fortran
+- nim
 
 ### Examples
 
@@ -59,20 +62,23 @@ Note: times are 5% more or less on different runs, so C and C++ can win sometime
 | #1      | Assembly | NASM             | 3.10s  | Winner                |
 | #2      | C        | GCC              | 3.12s  | 0.64%                 |
 | #3      | C++      | G++              | 3.15s  | 1.6%                  |
-| #4      | Go       | Go 1.20.3        | 3.81s  | 22%                   |
-| #5      | Julia    | Julia 1.8.5      | 3.87s  | 24%                   |
-| #6      | Rust     | Native 1.67.1    | 3.97s  | 28%                   |
-| #7      | C#       | Mono 6.8         | 5.32s  | 71%                   |
-| #8      | Java     | OpenJDK 17       | 5.73s  | 84%                   |
-| #9      | Js       | Nodejs 20        | 5.80s  | 87%                   |
-| #10     | Dart     | Dart 2.19.0      | 7.11s  | 129%                  |
-| #11     | Python   | Codon 0.16.0     | 10.89s | 251%                  |
-| #12     | Pascal   | FPC 3.2.2        | 13.68s | 341%                  |
-| #13     | PHP      | PHP 8.2.5        | 26.32s | 749%                  |
-| #14     | Python   | Python 3.11.3    | 82.31s | 2545%                 |
-| #15     | Ruby     | Ruby 3.2.2       | 85.55s | 2641%                 |
-| #16     | R        | Rscript 4.0.4    | 240.0s | 7641%                 |
-| #17     | [Chap](https://github.com/ali77gh/Chap)     | chap 1.0.1       | 1025s  | 32964%                |
+| #4      | Zig      | Zig 0.11.0       | 3.16s  | 1.9%                  |
+| #5      | Fortran  | GFortran 13.1    | 3.18s  | 2.6%                  |
+| #6      | Go       | Go 1.20.3        | 3.81s  | 22%                   |
+| #7      | Julia    | Julia 1.8.5      | 3.87s  | 24%                   |
+| #8      | Rust     | Native 1.67.1    | 3.97s  | 28%                   |
+| #9      | Nim      | Nim 2.0.0        | 4.05s  | 30%                   |
+| #10     | C#       | Mono 6.8         | 5.32s  | 71%                   |
+| #11     | Java     | OpenJDK 17       | 5.73s  | 84%                   |
+| #12     | Js       | Nodejs 20        | 5.80s  | 87%                   |
+| #13     | Dart     | Dart 2.19.0      | 7.11s  | 129%                  |
+| #14     | Python   | Codon 0.16.0     | 10.89s | 251%                  |
+| #15     | Pascal   | FPC 3.2.2        | 13.68s | 341%                  |
+| #16     | PHP      | PHP 8.2.5        | 26.32s | 749%                  |
+| #17     | Python   | Python 3.11.3    | 82.31s | 2545%                 |
+| #18     | Ruby     | Ruby 3.2.2       | 85.55s | 2641%                 |
+| #19     | R        | Rscript 4.0.4    | 240.0s | 7641%                 |
+| #20     | [Chap](https://github.com/ali77gh/Chap)     | chap 1.0.1       | 1025s  | 32964%                |
 
 The `n% Slower than Winner` column shows the percent difference between the time taken by each language and the fastest language (Assembly).
 
