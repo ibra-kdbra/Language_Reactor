@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        background-color: #020617;
+        @apply text-slate-200 font-sans min-h-screen relative overflow-x-hidden;
+    }
+}
+
+@layer components {
+    .bg-glow {
+        background: radial-gradient(circle at 50% -20%, #1e1b4b 0%, transparent 50%),
+                    radial-gradient(circle at 0% 100%, #1e1b4b 0%, transparent 40%);
+        @apply fixed inset-0 -z-10;
+    }
+
+    .dashboard-card {
+        @apply bg-dark-card backdrop-blur-xl border border-dark-border rounded-2xl p-5 md:p-6 shadow-2xl transition-all duration-300;
+    }
+
+    /* Premium Modern Floating Menu */
+    #fab-menu.fab-menu {
+        position: fixed !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        left: auto !important;
+        padding: 0.5rem !important;
+        z-index: 9999 !important;
+        display: flex !important;
+        flex-direction: column !important; /* Items stack normally */
+        align-items: center !important;
+        gap: 0.5rem !important;
+        pointer-events: none !important;
+        width: auto !important;
+        height: auto !important;
+    }
+
+    #fab-menu .fab-trigger {
+        width: 64px !important;
+        height: 64px !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        pointer-events: auto !important;
+        cursor: pointer !important;
+        border: none !important;
+        background: linear-gradient(135deg, #ff2d55 0%, #d11d43 100%) !important;
+        color: white !important;
+        box-shadow: 0 10px 25px rgba(255, 45, 85, 0.5) !important;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        position: relative !important;
+        order: 3 !important; /* Force trigger to bottom */
+    }
+
+    #fab-menu .fab-trigger:hover {
+        transform: scale(1.1) !important;
+        box-shadow: 0 15px 30px rgba(255, 45, 85, 0.6) !important;
+    }
+
+    #fab-menu.active .fab-trigger i {
+        transform: rotate(135deg) !important;
+    }
+
+    #fab-menu .fab-option {
+        width: 56px !important;
+        height: 56px !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        pointer-events: none !important;
+        opacity: 0 !important;
+        scale: 0 !important;
+        cursor: pointer !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        background: rgba(15, 23, 42, 0.8) !important;
+        backdrop-filter: blur(12px) !important;
+        color: #ff2d55 !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        text-decoration: none !important;
+    }
+
+    #fab-menu a.fab-option { order: 1 !important; }
+    #fab-menu button.fab-option { order: 2 !important; }
+
+    #fab-menu.active .fab-option {
+        opacity: 1 !important;
+        scale: 1 !important;
+        pointer-events: auto !important;
+    }
+
+    #fab-menu .fab-option:hover {
+        transform: scale(1.1) !important;
+        background: rgba(30, 41, 59, 0.9) !important;
+        border-color: #ff2d55 !important;
+        box-shadow: 0 0 20px rgba(255, 45, 85, 0.5) !important;
+    }
+
+    #fab-menu .fab-tooltip {
+        display: none !important;
+    }
+
+    /* Simplified Vertical Expansion (Upwards) */
+    #fab-menu.active .fab-option {
+        transform: translateY(0) !important;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 45, 85, 0.2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 45, 85, 0.4); }
