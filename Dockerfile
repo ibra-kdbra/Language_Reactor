@@ -5,6 +5,7 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # 1. System Essentials
+# We install software-properties-common here so we can add repositories later
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
@@ -41,7 +42,10 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no
 RUN apt-get install -y openjdk-17-jdk-headless
 
 # 3. Secondary Languages (via apt-get)
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# FIX: Enable 'universe' repository first, otherwise Julia/Nim/Mono won't be found
+RUN add-apt-repository -y universe \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
     gcc \
     g++ \
     nasm \
@@ -73,6 +77,7 @@ RUN wget https://ziglang.org/download/0.11.0/zig-linux-x86_64-0.11.0.tar.xz \
     && rm zig-linux-x86_64-0.11.0.tar.xz
 
 # Install Codon (Python compiler)
+# Note: Codon often defaults to interactive install, forcing -y or non-interactive mode if needed
 RUN /bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)" \
     && ln -s /root/.codon/bin/codon /usr/local/bin/codon
 
