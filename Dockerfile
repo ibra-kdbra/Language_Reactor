@@ -62,13 +62,11 @@ RUN add-apt-repository -y universe \
 # 4. Specialized Tooling & Manual Installs
 
 # Install Julia (Manual Binary Install)
-# Installs version 1.9.3 (Stable)
 RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.9/julia-1.9.3-linux-x86_64.tar.gz \
     && tar zxvf julia-1.9.3-linux-x86_64.tar.gz -C /usr/local --strip-components 1 \
     && rm julia-1.9.3-linux-x86_64.tar.gz
 
 # Install Nim (Manual Binary Install)
-# Installs version 2.0.0
 RUN wget https://nim-lang.org/download/nim-2.0.0-linux_x64.tar.xz \
     && tar -C /usr/local -xf nim-2.0.0-linux_x64.tar.xz \
     && ln -s /usr/local/nim-2.0.0/bin/nim /usr/local/bin/nim \
@@ -86,9 +84,12 @@ RUN wget https://ziglang.org/download/0.11.0/zig-linux-x86_64-0.11.0.tar.xz \
     && ln -s /usr/local/zig/zig /usr/local/bin/zig \
     && rm zig-linux-x86_64-0.11.0.tar.xz
 
-# Install Codon (Python compiler)
-RUN /bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)" \
-    && ln -s /root/.codon/bin/codon /usr/local/bin/codon
+# Install Codon (Manual Binary Install - FIXED)
+# The script was failing, so we download the release directly
+RUN wget https://github.com/exaloop/codon/releases/download/v0.16.3/codon-linux-x86_64.tar.gz \
+    && tar -C /usr/local -xzf codon-linux-x86_64.tar.gz \
+    && ln -s /usr/local/codon-linux-x86_64/bin/codon /usr/local/bin/codon \
+    && rm codon-linux-x86_64.tar.gz
 
 # Set working directory
 WORKDIR /app
