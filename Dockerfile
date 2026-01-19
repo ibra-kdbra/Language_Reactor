@@ -5,7 +5,6 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # 1. System Essentials
-# We install software-properties-common here so we can add repositories later
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
@@ -31,7 +30,7 @@ RUN wget https://go.dev/dl/go1.21.6.linux-amd64.tar.gz \
     && ln -s /usr/local/go/bin/go /usr/local/bin/go \
     && rm go1.21.6.linux-amd64.tar.gz
 
-# Install Rust (using rustup for latest cargo/rustc)
+# Install Rust (using rustup)
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH
@@ -42,7 +41,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no
 RUN apt-get install -y openjdk-17-jdk-headless
 
 # 3. Secondary Languages (via apt-get)
-# FIX: Enable 'universe' repository first, otherwise Julia/Nim/Mono won't be found
+# Note: Julia and Nim removed from here to be installed manually
 RUN add-apt-repository -y universe \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -53,8 +52,6 @@ RUN add-apt-repository -y universe \
     python3 \
     python3-pip \
     ruby-full \
-    julia \
-    nim \
     fp-compiler \
     mono-devel \
     ghc \
@@ -62,7 +59,20 @@ RUN add-apt-repository -y universe \
     r-base-core \
     && apt-get clean
 
-# 4. Specialized Tooling
+# 4. Specialized Tooling & Manual Installs
+
+# Install Julia (Manual Binary Install)
+# Installs version 1.9.3 (Stable)
+RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.9/julia-1.9.3-linux-x86_64.tar.gz \
+    && tar zxvf julia-1.9.3-linux-x86_64.tar.gz -C /usr/local --strip-components 1 \
+    && rm julia-1.9.3-linux-x86_64.tar.gz
+
+# Install Nim (Manual Binary Install)
+# Installs version 2.0.0
+RUN wget https://nim-lang.org/download/nim-2.0.0-linux_x64.tar.xz \
+    && tar -C /usr/local -xf nim-2.0.0-linux_x64.tar.xz \
+    && ln -s /usr/local/nim-2.0.0/bin/nim /usr/local/bin/nim \
+    && rm nim-2.0.0-linux_x64.tar.xz
 
 # Install Dart
 RUN curl -fsSL https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/dart.gpg \
@@ -77,7 +87,6 @@ RUN wget https://ziglang.org/download/0.11.0/zig-linux-x86_64-0.11.0.tar.xz \
     && rm zig-linux-x86_64-0.11.0.tar.xz
 
 # Install Codon (Python compiler)
-# Note: Codon often defaults to interactive install, forcing -y or non-interactive mode if needed
 RUN /bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)" \
     && ln -s /root/.codon/bin/codon /usr/local/bin/codon
 
