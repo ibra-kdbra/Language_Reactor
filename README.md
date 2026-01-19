@@ -1,119 +1,121 @@
-# Performance Test
+# Performance Test: Language Reactor
 
-This repository contains an implementation of the `is_prime` function in multiple programming languages using the same algorithm. The goal is to compare the performance of different languages and runtimes.
+This repository contains implementations of the `is_prime` function in multiple programming languages using the same algorithm. The goal is to compare the performance of different languages and runtimes in a standardized environment.
 
-## Usage
+## 🚀 New Features
+
+**⚡ Real-time Cloud Benchmarking** - Run actual benchmarks on the server with live output streaming via Server-Sent Events (SSE).
+
+**💬 Persistent Community Feedback** - Integrated with **Turso (LibSQL)** to store comments permanently in the cloud, even on serverless platforms.
+
+**🛡️ Robust & Secure** - Custom Content Security Policy (CSP), high-performance rate limiting, and an extensive profanity filtering system.
+
+**🤖 Automated Deployment** - Fully containerized with Docker and automated via **GitHub Actions** for continuous deployment to Google Cloud Run.
+
+---
+
+## Quick Start
+
+### 1. Static Mode (Frontend Only)
+
+Open [docs/index.html](docs/index.html) in a browser to view pre-calculated results and run JavaScript-based browser benchmarks.
+
+### 2. Full-Stack Mode (Local Development)
+
+1. **Install dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+2. **Start the server:**
+
+   ```bash
+   npm start
+   ```
+
+3. **Open browser:** `http://localhost:3000`
+
+### 3. Cloud Deployment
+
+The project is optimized for the Google Cloud "Always Free" tier.
+
+- See [**`docs/meta/GCP_DEPLOYMENT.md`**](./docs/meta/GCP_DEPLOYMENT.md) for step-by-step instructions on deploying with Turso and GitHub Actions.
+
+---
+
+## Project Structure
+
+- **`docs/`**: Frontend web dashboard and deployment documentation.
+- **`server/`**: Node.js backend logic, API, and database drivers.
+- **`scripts/`**: High-performance execution scripts for the benchmark engine.
+- **`src/benchmarks/`**: Core prime-number algorithm implementations for all 16+ languages.
+- **`result/`**: Repository of historical benchmark data across different CPUs.
+
+---
+
+## Supported Languages
+
+The benchmark environment (Docker) supports:
+
+- **Compiled/Native**: Assembly (NASM), C (GCC), C++ (G++), Rust, Go, Zig, Fortran, Nim, Haskell, Pascal (FPC).
+- **Managed/JIT**: Java (OpenJDK), Node.js, C# (Mono), Dart, Julia.
+- **Interpreted**: Python, PHP, Ruby, R.
+- **Specialized**: Codon (High-performance Python compiler).
+
+---
+
+## Usage (CLI)
 
 ### Linux/macOS
 
-To run code in various programming languages, use the `run.sh` script:
-
 ```bash
-./run.sh [LANGUAGE]
+./scripts/run.sh [LANGUAGE]
 ```
 
 ### Windows (PowerShell)
 
-On Windows, use the `run.ps1` PowerShell script:
-
 ```powershell
-.\run.ps1 [LANGUAGE]
+.\scripts\run.ps1 [LANGUAGE]
 ```
 
-If no argument is provided, the script will run code in all supported languages. Otherwise, provide a language name to run the corresponding code.
+---
 
-### Supported Languages
+## Results: Intel(R) Core(TM) i7-8550U
 
-- assembly
-- c
-- cpp
-- rust
-- go
-- java
-- nodejs
-- csharp_mono
-- dart
-- python_codon
-- pascal
-- python
-- php
-- r
-- [chap](https://github.com/ali77gh/Chap)
-- zig
-- fortran
-- nim
+| Ranking | Language | Runtime/Compiler | Time | n% Slower |
+| :--- | :--- | :--- | :--- | :--- |
+| #1 | Assembly | NASM | 3.10s | Winner |
+| #2 | C | GCC | 3.12s | 0.64% |
+| #3 | C++ | G++ | 3.15s | 1.6% |
+| #4 | Zig | Zig 0.11.0 | 3.16s | 1.9% |
+| #5 | Fortran | GFortran 13.1 | 3.18s | 2.6% |
+| #6 | Go | Go | 3.81s | 22% |
+| #7 | Julia | Julia | 3.87s | 24% |
+| #8 | Rust | Rustc (O3) | 3.97s | 28% |
+| #9 | Nim | Nim | 4.05s | 30% |
+| #10 | Haskell | GHC (O3) | 4.20s | 35% |
+| #11 | C# | Mono | 5.32s | 71% |
+| #12 | Java | OpenJDK 17 | 5.73s | 84% |
+| #13 | Js | Nodejs 20 | 5.80s | 87% |
+| #14 | Dart | Dart | 7.11s | 129% |
+| #15 | Python | Codon | 10.89s | 251% |
+| #16 | Pascal | FPC | 13.68s | 341% |
+| #17 | PHP | PHP | 26.32s | 749% |
+| #18 | Python | Python 3 | 82.31s | 2545% |
+| #19 | Ruby | Ruby | 85.55s | 2641% |
+| #20 | R | Rscript | 240.0s | 7641% |
 
-### Examples
-
-#### Linux/macOS
-
-```bash
-# Run code in all supported languages
-./run.sh
-
-# Run specific language
-./run.sh cpp
-```
-
-#### Windows (PowerShell)
-
-```powershell
-# Run code in all supported languages
-.\run.ps1
-
-# Run specific language
-.\run.ps1 cpp
-```
-
-To display usage instructions and a list of supported languages, use the `--help` or `-h` flag:
-
-```bash
-./run.sh --help
-# or on Windows
-.\run.ps1 --help
-```
-
-If you want to add your own test results, simply run the `run.sh` script with your CPU model name and redirect the output to a file in the `result` directory.
-
-See the [result directory](./result) for the output of running the tests on different CPUs.
-
-## My Laptop (Intel(R) Core(TM) i7-8550U)
-
-Note: times are 5% more or less on different runs, so C and C++ can win sometimes.
-
-| Ranking | Language | Runtime/Compiler | Time   | n% Slower than Winner |
-| ------- | -------- | ---------------- | ------ | --------------------- |
-| #1      | Assembly | NASM             | 3.10s  | Winner                |
-| #2      | C        | GCC              | 3.12s  | 0.64%                 |
-| #3      | C++      | G++              | 3.15s  | 1.6%                  |
-| #4      | Zig      | Zig 0.11.0       | 3.16s  | 1.9%                  |
-| #5      | Fortran  | GFortran 13.1    | 3.18s  | 2.6%                  |
-| #6      | Go       | Go 1.20.3        | 3.81s  | 22%                   |
-| #7      | Julia    | Julia 1.8.5      | 3.87s  | 24%                   |
-| #8      | Rust     | Native 1.67.1    | 3.97s  | 28%                   |
-| #9      | Nim      | Nim 2.0.0        | 4.05s  | 30%                   |
-| #10     | C#       | Mono 6.8         | 5.32s  | 71%                   |
-| #11     | Java     | OpenJDK 17       | 5.73s  | 84%                   |
-| #12     | Js       | Nodejs 20        | 5.80s  | 87%                   |
-| #13     | Dart     | Dart 2.19.0      | 7.11s  | 129%                  |
-| #14     | Python   | Codon 0.16.0     | 10.89s | 251%                  |
-| #15     | Pascal   | FPC 3.2.2        | 13.68s | 341%                  |
-| #16     | PHP      | PHP 8.2.5        | 26.32s | 749%                  |
-| #17     | Python   | Python 3.11.3    | 82.31s | 2545%                 |
-| #18     | Ruby     | Ruby 3.2.2       | 85.55s | 2641%                 |
-| #19     | R        | Rscript 4.0.4    | 240.0s | 7641%                 |
-| #20     | [Chap](https://github.com/ali77gh/Chap)     | chap 1.0.1       | 1025s  | 32964%                |
-
-The `n% Slower than Winner` column shows the percent difference between the time taken by each language and the fastest language (Assembly).
-
-Formula: ((LanguageTime - WinnerTime) * 100) / WinnerTime
+---
 
 ## Contribute
 
-You can contribute to this repository in one of the following ways:
+1. Optimize your favorite language **without changing the algorithm** or using concurrency.
+2. Add a new language implementation using the same prime-number logic.
+3. Share your hardware results by submitting a PR to the `result/` directory.
 
-1. Optimize your favorite programming language <b>without changing the algorithm</b> and without using concurrency.
-2. Add a new language by using <b>the same algorithm</b>.
-3. Add a new runtime.
-4. Share your test results.
-5. Add your result to the `result` directory.
+---
+
+## Modernization Credits
+
+The project was recently restructured and modernized. For a full log of changes, see [**`docs/meta/IMPLEMENTATION_SUMMARY.md`**](./docs/meta/IMPLEMENTATION_SUMMARY.md).
