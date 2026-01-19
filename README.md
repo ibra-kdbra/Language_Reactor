@@ -4,10 +4,20 @@ This repository contains an implementation of the `is_prime` function in multipl
 
 ## Usage
 
+### Linux/macOS
+
 To run code in various programming languages, use the `run.sh` script:
 
 ```bash
 ./run.sh [LANGUAGE]
+```
+
+### Windows (PowerShell)
+
+On Windows, use the `run.ps1` PowerShell script:
+
+```powershell
+.\run.ps1 [LANGUAGE]
 ```
 
 If no argument is provided, the script will run code in all supported languages. Otherwise, provide a language name to run the corresponding code.
@@ -35,6 +45,8 @@ If no argument is provided, the script will run code in all supported languages.
 
 ### Examples
 
+#### Linux/macOS
+
 ```bash
 # Run code in all supported languages
 ./run.sh
@@ -43,10 +55,22 @@ If no argument is provided, the script will run code in all supported languages.
 ./run.sh cpp
 ```
 
+#### Windows (PowerShell)
+
+```powershell
+# Run code in all supported languages
+.\run.ps1
+
+# Run specific language
+.\run.ps1 cpp
+```
+
 To display usage instructions and a list of supported languages, use the `--help` or `-h` flag:
 
 ```bash
 ./run.sh --help
+# or on Windows
+.\run.ps1 --help
 ```
 
 If you want to add your own test results, simply run the `run.sh` script with your CPU model name and redirect the output to a file in the `result` directory.
