@@ -1,0 +1,26 @@
+# Ignore Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Database
+reactor.db
+reactor.db-shm
+reactor.db-wal
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp

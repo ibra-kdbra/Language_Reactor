@@ -1,0 +1,10 @@
+node_modules
+npm-debug.log
+server/reactor.db*
+.git
+.env
+.vscode
+result/
+*.o
+*.exe
+try/Prime.class
